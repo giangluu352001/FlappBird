@@ -1,23 +1,23 @@
-import { BackGround } from "../components/Ground/BackGround";
-import { Bird } from "../components/Bird/Bird";
-import { ForeGround } from "../components/Ground/ForeGround";
-import { GameOver } from "../components/GameOver/GameOver";
-import { PipeDown } from "../components/Pipe/PipeDown";
-import { PipeUp } from "../components/Pipe/PipeUp";
-import { Restart } from "../components/GameOver/Restart";
-import { Digits } from "../components/Number/Digits";
-import { TableScore } from "../components/GameOver/TableScore";
-import { collision } from "../physic/Collision";
-import { BIRDHEIGHT, CANVASHEIGHT, CANVASWIDTH, LAND } from "../utils/Constant";
-import { GameState } from "./GameState";
-import { Vector2D } from "../utils/Vector2D";
+import { BackGround } from "../Ground/BackGround";
+import { Bird } from "../Bird/Bird";
+import { ForeGround } from "../Ground/ForeGround";
+import { GameOver } from "../GameOver/GameOver";
+import { PipeDown } from "../Pipe/PipeDown";
+import { PipeUp } from "../Pipe/PipeUp";
+import { Restart } from "../GameOver/Restart";
+import { Digits } from "../Number/Digits";
+import { TableScore } from "../../components/GameOver/TableScore";
+import { collision } from "../../physic/Collision";
+import { BIRDHEIGHT, CANVASHEIGHT, CANVASWIDTH, LAND } from "../../utils/Constant";
+import { GameState } from "../../game/GameState";
+import { Vector2D } from "../../utils/Vector2D";
 
 export class Scene extends GameState {
     private background: BackGround;
     private foreground: ForeGround;
     private bird: Bird;
     private score: Digits;
-    private  static bestScore: Digits = new Digits(new Vector2D(CANVASWIDTH * 0.51, CANVASHEIGHT * 0.41));
+    private static bestScore: Digits = new Digits(new Vector2D(CANVASWIDTH * 0.51, CANVASHEIGHT * 0.41));
     private gameOver: GameOver;
     private restart: Restart;
     private tableScore: TableScore;
@@ -67,7 +67,10 @@ export class Scene extends GameState {
         let pipeUp: PipeUp = new PipeUp();
         let pipeDown: PipeDown = new PipeDown();
         this.pipes.push([pipeUp, pipeDown]);
-        super.addObject({gameObject: pipeUp, priority: 2}, {gameObject: pipeDown, priority: 2});
+        super.addObject(
+            {gameObject: pipeUp, priority: 2}, 
+            {gameObject: pipeDown, priority: 2}
+        );
         this.timer = setTimeout(() => this.addPipes(), 1500);
     }
     public stop(): void {
@@ -80,9 +83,14 @@ export class Scene extends GameState {
     }
     public checkCollision(): boolean {
         if(this.bird.getPosition().Y + BIRDHEIGHT >= LAND) return true;
-        for (let pipe of this.pipes) 
-            if (collision(this.bird, pipe[0]))
+        for (let pipe of this.pipes) {
+            if (Math.floor(this.bird.getPosition().X) == Math.ceil(pipe[0].getPosition().X)) {
+                this.increaseScore();
+                this.assignBestScore();
+            }
+            if (collision(this.bird, pipe[0]) || collision(this.bird, pipe[1]))
                 return true;
+        }
         return false;
     }
 }

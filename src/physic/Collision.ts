@@ -1,11 +1,7 @@
-import { Bird } from "../components/Bird/Bird";
-import { Pipe } from "../components/Pipe/Pipe";
-import { gameCore } from "../game/GameCore";
 import { GameObject } from "../objects/GameObject";
-import { BIRDHEIGHT, BIRDWIDTH, GAP, PIPEHEIGHT, PIPEWIDTH } from "../utils/Constant";
 import { Vector2D } from "../utils/Vector2D";
 
-export function collision(bird: Bird, pipe: Pipe) {
+/*export function collision(bird: Bird, pipe: Pipe) {
     let x = pipe.getPosition().X;
     let y = pipe.getPosition().Y;
     let roof = y + PIPEHEIGHT;
@@ -24,8 +20,8 @@ export function collision(bird: Bird, pipe: Pipe) {
         }
     }
     return false;
-}
-/*export function collision(obj1: GameObject, obj2: GameObject) {
+}*/
+export function collision(obj1: GameObject, obj2: GameObject) {
     let pos1: Vector2D = obj1.getPosition();
     let pos2: Vector2D = obj2.getPosition();
     if (
@@ -34,4 +30,4 @@ export function collision(bird: Bird, pipe: Pipe) {
         pos1.Y < pos2.Y + obj2.getSprite().getHeight() &&
         pos1.Y + obj1.getSprite().getHeight() > pos2.Y
     ) return true;
-}*/
+}

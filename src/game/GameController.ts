@@ -1,7 +1,7 @@
 import { Input } from "../input/Input";
 import { CANVASHEIGHT, CANVASWIDTH } from "../utils/Constant";
 import { State } from "../utils/Enum";
-import { Scene } from "./Scene";
+import { Scene } from "../components/Scene/Scene";
 
 export class GameController {
     protected scene: Scene;

@@ -64,14 +64,14 @@ export class Bird extends GameObject {
     }
     public dying(): void {
         this.isPlay = false;
-        this.physic?.setVelocity(0, 0); // 300 chieu y
+        this.physic?.setVelocity(0, 300);
         this.animation.setRunning(false);
-        //this.physic?.setAngle(90);
+        this.physic?.setAngle(90);
     }
     public jum(): void {
         this.physic?.setVelocity(0, -400);
         this.physic?.setForce(0, 1.5);
-        this.physic?.setAngle(-15);
+        this.physic?.setAngle(-25);
         this.isPlay = true;
     }
 }
