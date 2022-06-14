@@ -25,7 +25,6 @@ export const allImage = ImageLoading.getInstance();
 allImage.push("background", "images/bg.png");
 allImage.push("foreground", "images/fg.png");
 allImage.push("gameover", "images/text_game_over.png");
-allImage.push("title", "images/title.png");
 allImage.push("best", "images/best.png");
 allImage.push("restart", "images/restart.png");
 for (let i = 0; i < NUMOFBIRD; i++)
