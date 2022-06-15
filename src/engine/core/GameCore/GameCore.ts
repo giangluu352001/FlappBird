@@ -13,20 +13,19 @@ class GameCore extends GameController {
     public progressInput(): void {
         if(this.input.getCode() == Key.SPACE) {
             if(this.state == State.Waiting)
-                this.playGame();
+                this.playGame(true);
             else if(this.state == State.Ended)
                 this.resetGame();
-            else this.scene.getBird().jum();
+            else this.playGame(false);
         }
-        else if(this.input.getCode() == Key.HIT && this.state == State.Ended) {
-                this.resetGame();
-        }
+        else if(this.input.getCode() == Key.HIT && this.state == State.Ended)
+            this.resetGame();
         this.input.setCode(Key.NULL);
     }
     public update(time: number, delta: number): void {
         for (let object of this.scene.getObjects())
             object.gameObject.update(time, delta);
-        if(this.state == State.Playing && this.scene.checkCollision())
+        if(this.state == State.Playing && this.scene.checkCollisionAndInscrease())
             this.gameOver();
     }
     public render(): void {

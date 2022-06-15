@@ -8,12 +8,11 @@ import { Restart } from "../Components/GameOver/Restart";
 import { Digits } from "../Components/Number/Digits";
 import { TableScore } from "../Components/GameOver/TableScore";
 import { collision } from "../../engine/physic/Collision";
-import { BIRDHEIGHT, CANVASHEIGHT, CANVASWIDTH, LAND } from "../../utils/Constant";
+import { BIRDHEIGHT, BIRDWIDTH, CANVASHEIGHT, CANVASWIDTH, LAND, PIPEWIDTH } from "../../utils/Constant";
 import { GameState } from "../../engine/core/GameCore/GameState";
 import { Vector2D } from "../../utils/Vector2D";
 
 export class Scene extends GameState {
-    [x: string]: any;
     private background: BackGround;
     private foreground: ForeGround;
     private bird: Bird;
@@ -49,9 +48,6 @@ export class Scene extends GameState {
     public static setVisibleBest(): void {
         Scene.bestScore.setEnable(true);
     }
-    public getBird(): Bird {
-        return this.bird;
-    }
     public getScore(): Digits {
         return this.score;
     }
@@ -59,10 +55,9 @@ export class Scene extends GameState {
         this.score.setNumber(this.score.getNumber() + 1);
     } 
     public assignBestScore(): void {
-        Scene.bestScore.setNumber(Math.max(Scene.bestScore.getNumber(), this.score.getNumber()));
-    }
-    public changePosScore(digits: Digits, x: number, y: number): void {
-        digits.changePosition(x, y);
+        Scene.bestScore.setNumber(
+        Math.max(Scene.bestScore.getNumber(), 
+        this.score.getNumber()));
     }
     public addPipes(): void {
         let pipeUp: PipeUp = new PipeUp();
@@ -82,15 +77,27 @@ export class Scene extends GameState {
         this.foreground.stop();
         this.bird.dying();
     }
-    public checkCollision(): boolean {
+    public start(bool: boolean): void {
+        this.bird.jum();
+        if(bool) this.timer = setTimeout(() => this.addPipes(), 3000);
+    }
+    public checkCollisionAndInscrease(): boolean {
+        let birdPos: Vector2D = this.bird.getPosition();
         if(this.bird.getPosition().Y + BIRDHEIGHT >= LAND) return true;
         for (let pipe of this.pipes) {
-            if (Math.floor(this.bird.getPosition().X) == Math.ceil(pipe[0].getPosition().X)) {
+            let pipePos: Vector2D = pipe[0].getPosition();
+            if (Math.floor(birdPos.X) == Math.ceil(pipePos.X)) {
                 this.increaseScore();
                 this.assignBestScore();
             }
-            if (collision(this.bird, pipe[0]) || collision(this.bird, pipe[1]))
+            if ((birdPos.Y <= pipePos.Y && birdPos.X + BIRDWIDTH >= pipePos.X) || 
+            collision(this.bird, pipe[0]) || collision(this.bird, pipe[1]))
                 return true;
+            if(pipePos.X + PIPEWIDTH < 0) {
+                this.removeObject(pipe[0]);
+                this.removeObject(pipe[1]);
+                this.pipes.splice(this.pipes.indexOf(pipe), 1);
+            }
         }
         return false;
     }

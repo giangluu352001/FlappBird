@@ -12,13 +12,15 @@ export class GameState {
     public getEnabledObjects(): Array<{gameObject: GameObject, priority: number}> {
         return this.objects.filter((object) => object.gameObject.getEnabled() == true);
     }
-    public setVisibles(name: string, value: boolean): void {
-        let object: {gameObject: GameObject, priority: number} = this.objects.find(
-        (object) => object.gameObject.constructor.name == name)!;
-        object.gameObject.setEnable(value);
-    }
     public setEnables(value: boolean, ...gameObjects: Array<GameObject>): void {
         gameObjects.forEach((object) => object.setEnable(value));
+    }
+    public setAllVisibled(value: boolean, ...names: Array<string>) {
+        names.forEach((name) => this.objects.find((object) => 
+        object.gameObject.constructor.name == name)?.gameObject.setEnable(value))
+    }
+    public removeObject(gameObject: GameObject) {
+        this.objects = this.objects.filter((object) => object.gameObject != gameObject);
     }
 }
 

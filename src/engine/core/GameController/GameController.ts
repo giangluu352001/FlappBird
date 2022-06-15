@@ -17,18 +17,15 @@ export class GameController {
     }
     protected gameOver(): void {
         this.state = State.Ended;
-        this.scene.setVisibles("GameOver", true);
-        this.scene.setVisibles("Restart", true);
-        this.scene.setVisibles("TableScore", true);
-        this.scene.changePosScore(this.scene.getScore(), CANVASWIDTH * 0.51, CANVASHEIGHT * 0.31);
+        this.scene.setAllVisibled(true, "GameOver", "Restart", "TableScore");
+        this.scene.getScore().changePosition(CANVASWIDTH * 0.51, CANVASHEIGHT * 0.31);
         Scene.setVisibleBest();
         this.scene.stop();
         clearTimeout(this.scene.timer);
     }
-    public playGame(): void {
+    public playGame(bool: boolean): void {
         this.state = State.Playing;
-        this.scene.getBird().jum();
-        this.scene.timer = setTimeout(() => this.scene.addPipes(), 3000);
+        this.scene.start(bool);
     }
     public resetGame(): void {
         this.state = State.Waiting;
