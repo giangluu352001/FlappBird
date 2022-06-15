@@ -18,9 +18,7 @@ export class GameController {
     public getState(): State {
         return this.state;
     }
-    public setState(val: State) {
-        this.state = val;
-    }
+    
     public getScene(): Scene {
         return this.scene;
     }
