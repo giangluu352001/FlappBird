@@ -1,4 +1,4 @@
-import { gameCore } from "./game/GameCore";
+import { gameCore } from "./engine/core/GameCore/GameCore";
 gameCore.start();
 let lastTime = window.performance.now();
 requestAnimationFrame(gameLoop);
