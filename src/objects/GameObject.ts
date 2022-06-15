@@ -2,7 +2,7 @@ import { Vector2D } from "../utils/Vector2D";
 import { Physic } from "../physic/Physic";
 import { Sprite } from "../renders/Sprite";
 
-export abstract class GameObject {
+export class GameObject {
     protected position: Vector2D;
     private enabled: boolean;
     protected sprite!: Sprite;
@@ -31,5 +31,5 @@ export abstract class GameObject {
         this.position.setX(x);
         this.position.setY(y);
     }
-    public abstract update(time: number, delta: number): void;
+    public update(time: number, delta: number): void {};
 }

@@ -11,5 +11,4 @@ export class Restart extends GameObject {
         let image: HTMLImageElement = allImage.get("restart");
         this.sprite.setImage(image, 80, 40);
     }
-    public update(time: number, delta: number): void {}
 }

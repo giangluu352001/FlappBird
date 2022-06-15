@@ -19,6 +19,4 @@ export class SingleDigit extends GameObject {
         let image: HTMLImageElement = allImage.get(`${this.value}`);
         this.sprite!.setImage(image, image.width, image.height);
     }
-    public update(time: number, delta: number): void {}
-    
 }

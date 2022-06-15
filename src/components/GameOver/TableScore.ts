@@ -11,5 +11,4 @@ export class TableScore extends GameObject {
         let image: HTMLImageElement = allImage.get("best");
         this.sprite.setImage(image, image.width * 1.4, image.height * 1.5);
     }
-    public update(time: number, delta: number): void {}
 }

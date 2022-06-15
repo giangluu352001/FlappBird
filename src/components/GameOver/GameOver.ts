@@ -11,5 +11,4 @@ export class GameOver extends GameObject {
         let image: HTMLImageElement = allImage.get("gameover");
         this.sprite.setImage(image, image.width, image.height);
     }
-    public update(time: number, delta: number): void {}
 }

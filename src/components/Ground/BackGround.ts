@@ -12,5 +12,4 @@ export class BackGround extends GameObject {
         this.sprite.setImage(image, CANVASHEIGHT * (BGWIDTH / BGHEIGHT), CANVASHEIGHT);
         this.sprite.setNumOfImage(Math.ceil(CANVASWIDTH / BGWIDTH) + 1);
     }
-    public update(): void {}
 }

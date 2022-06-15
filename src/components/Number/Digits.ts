@@ -23,7 +23,6 @@ export class Digits extends GameObject {
         return this.digits.filter((digit) => digit.getValue() != -1)
         .map((digit) => { return digit.getSprite(); });
     }
-    public update(time: number, delta: number): void {}
     public setNumber(value: number): void {
         this.value = value;
         let tempString: string = value.toLocaleString();
