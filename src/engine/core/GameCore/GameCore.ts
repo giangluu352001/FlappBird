@@ -12,7 +12,9 @@ class GameCore extends GameController {
     }
     public progressInput(): void {
         if(this.input.getCode() == Key.SPACE) {
-            if(this.state == State.Waiting)
+            if(this.state == State.Paused)
+                this.resumeGame();
+            else if(this.state == State.Waiting)
                 this.playGame(true);
             else if(this.state == State.Ended)
                 this.resetGame();
@@ -20,6 +22,8 @@ class GameCore extends GameController {
         }
         else if(this.input.getCode() == Key.HIT && this.state == State.Ended)
             this.resetGame();
+        else if(this.input.getCode() == Key.PAUSE && this.state != State.Ended)
+            this.pauseGame();
         this.input.setCode(Key.NULL);
     }
     public update(time: number, delta: number): void {

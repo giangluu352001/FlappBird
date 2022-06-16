@@ -18,6 +18,9 @@ export class ForeGround extends GameObject{
     public stop(): void {
         this.physic?.setVelocity(0, 0);
     }
+    public resume(): void {
+        this.physic.setVelocity(Math.round(CANVASWIDTH * 0.2), 0);
+    }
     public update(time: number, delta: number): void {
         let position: Vector2D = this.position;
         if(position.X + this.sprite!.getWidth() < 0) position.setX(0);

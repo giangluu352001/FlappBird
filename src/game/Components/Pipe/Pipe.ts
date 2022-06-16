@@ -14,4 +14,7 @@ export class Pipe extends GameObject {
     public stop(): void {
         this.physic?.setVelocity(0, 0);
     }
+    public resume(): void {
+        this.physic.setVelocity(Math.round(CANVASWIDTH * 0.2), 0);
+    }
 }

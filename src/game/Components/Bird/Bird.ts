@@ -44,4 +44,14 @@ export class Bird extends GameObject {
         this.physic?.setForce(0, 1.5);
         this.physic?.setAngle(-25);
     }
+    public pause(): void {
+        this.physic.setVelocity(0, 0);
+        this.physic.setForce(0, 0);
+        this.animation.setRunning(false);
+    }
+    public resume(): void {
+        this.animation.setRunning(true);
+        this.jum();
+    }
+
 }

@@ -11,7 +11,6 @@ import { collision } from "../../engine/physic/Collision";
 import { BIRDHEIGHT, BIRDWIDTH, CANVASHEIGHT, CANVASWIDTH, LAND, PIPEWIDTH } from "../../utils/Constant";
 import { GameState } from "../../engine/core/GameCore/GameState";
 import { Vector2D } from "../../utils/Vector2D";
-
 export class Scene extends GameState {
     private background: BackGround;
     private foreground: ForeGround;
@@ -70,12 +69,24 @@ export class Scene extends GameState {
         this.timer = setTimeout(() => this.addPipes(), 1500);
     }
     public stop(): void {
-        this.pipes.forEach((pipe) => {
-            pipe[0].stop();
-            pipe[1].stop();
-        });
+        this.stopPipe();
         this.foreground.stop();
         this.bird.dying();
+    }
+    public pause(): void {
+        clearTimeout(this.timer);
+        this.stopPipe();
+        this.bird.pause();
+        this.foreground.stop();
+    }
+    public resume(): void {
+        this.pipes.forEach((pipe) => {
+            pipe[0].resume();
+            pipe[1].resume();
+        });
+        this.timer = setTimeout(() => this.addPipes(), 1500);
+        this.foreground.resume();
+        this.bird.resume();
     }
     public start(bool: boolean): void {
         this.bird.jum();
@@ -94,11 +105,20 @@ export class Scene extends GameState {
             collision(this.bird, pipe[0]) || collision(this.bird, pipe[1]))
                 return true;
             if(pipePos.X + PIPEWIDTH < 0) {
-                this.removeObject(pipe[0]);
-                this.removeObject(pipe[1]);
-                this.pipes.splice(this.pipes.indexOf(pipe), 1);
+                this.removePipe(pipe);
             }
         }
         return false;
+    }
+    private removePipe(pipe: [PipeUp, PipeDown]) {
+        this.removeObject(pipe[0]);
+        this.removeObject(pipe[1]);
+        this.pipes.splice(this.pipes.indexOf(pipe), 1);
+    }
+    private stopPipe(): void {
+        this.pipes.forEach((pipe) => {
+            pipe[0].stop();
+            pipe[1].stop();
+        });
     }
 }

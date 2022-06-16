@@ -31,4 +31,12 @@ export class GameController {
         this.state = State.Waiting;
         this.scene = new Scene();
     }
+    public pauseGame(): void {
+        this.state = State.Paused;
+        this.scene.pause();
+    }
+    public resumeGame(): void {
+        this.state = State.Playing;
+        this.scene.resume();
+    }
 }
